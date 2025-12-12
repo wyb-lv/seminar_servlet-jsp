@@ -16,6 +16,49 @@
         </c:if>
     </div>
 
+    <%-- Search Bar --%>
+    <div class="row mb-4">
+        <div class="col-12">
+            <form action="<c:url value="/home/search.do" />" method="get" class="search-form">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text"
+                           class="form-control"
+                           name="keyword"
+                           placeholder="Search albums by name..."
+                           value="${keyword}"
+                           aria-label="Search albums">
+                    <button class="btn btn-primary" type="submit">
+                        Search
+                    </button>
+                    <c:if test="${not empty keyword}">
+                        <a href="<c:url value="/home/index.do" />" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Clear
+                        </a>
+                    </c:if>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%-- Search Results Message --%>
+    <c:if test="${not empty keyword}">
+        <div class="alert alert-info mb-3">
+            <i class="bi bi-info-circle me-2"></i>
+            Showing results for: <strong>"${keyword}"</strong>
+        </div>
+    </c:if>
+
+    <%-- No Results Message --%>
+    <c:if test="${not empty message}">
+        <div class="alert alert-warning mb-3">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            ${message}
+        </div>
+    </c:if>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <c:forEach var="product" items="${products}">
             <div class="col">
@@ -95,3 +138,47 @@
     </div>
 </section>
 
+<style>
+    .search-form .input-group {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .search-form .input-group-text {
+        border: 1px solid #dee2e6;
+        border-right: none;
+        color: #6c757d;
+    }
+
+    .search-form .form-control {
+        border-left: none;
+        border-right: none;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .search-form .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
+    }
+
+    .search-form .btn {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        border: none;
+    }
+
+    .search-form .btn-primary {
+        background-color: var(--accent-color, #8b7355);
+    }
+
+    .search-form .btn-primary:hover {
+        background-color: #6d5a43;
+    }
+
+    .search-form .btn-outline-secondary {
+        border: 1px solid #dee2e6;
+        border-left: none;
+    }
+</style>

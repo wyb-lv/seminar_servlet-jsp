@@ -92,4 +92,17 @@ public class ProductFacade {
         con.close();
         return product;
     }
+    
+    public List<Product> getProductByName(String name) throws SQLException {
+        Connection con = DBContext.getConnection();
+        PreparedStatement stm = con.prepareStatement("SELECT * FROM product WHERE LOWER(name) LIKE LOWER(?) ORDER BY id");
+        stm.setString(1, "%" + name + "%");
+        ResultSet rs = stm.executeQuery();
+        List<Product> products = new ArrayList<>();
+        while (rs.next()) {
+            products.add(mapResultSetToProduct(rs));
+        }
+        con.close();
+        return products;
+    }
 }

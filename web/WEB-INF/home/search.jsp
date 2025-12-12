@@ -55,7 +55,7 @@
     <c:if test="${not empty message}">
         <div class="alert alert-warning mb-3">
             <i class="bi bi-exclamation-triangle me-2"></i>
-            ${message}
+                ${message}
         </div>
     </c:if>
 
@@ -63,7 +63,7 @@
         <c:forEach var="product" items="${products}">
             <div class="col">
                 <article class="card h-100 shadow-sm product-card hover-lift">
-                    <%-- Product Image - Clickable --%>
+                        <%-- Product Image - Clickable --%>
                     <a href="<c:url value="/home/detail.do?id=${product.id}" />" class="text-decoration-none">
                         <div class="position-relative overflow-hidden product-image-wrapper">
                             <c:choose>
@@ -80,16 +80,16 @@
                                          loading="lazy">
                                 </c:otherwise>
                             </c:choose>
-                            <%-- Stock Status Badge --%>
+                                <%-- Stock Status Badge --%>
                             <c:if test="${product.stockStatus != 'Còn hàng'}">
                                 <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2 small">
-                                    ${product.stockStatus}
+                                        ${product.stockStatus}
                                 </span>
                             </c:if>
                         </div>
                     </a>
 
-                    <%-- Product Details --%>
+                        <%-- Product Details --%>
                     <div class="card-body p-3 d-flex flex-column">
                         <a href="<c:url value="/home/detail.do?id=${product.id}" />" class="text-decoration-none">
                             <h6 class="card-title mb-1 text-dark" title="${product.name}">${product.name}</h6>
@@ -103,14 +103,14 @@
                             <span class="badge bg-secondary small">${product.category}</span>
                         </p>
 
-                        <%-- Pricing --%>
+                            <%-- Pricing --%>
                         <div class="pricing mb-2 mt-auto">
                             <span class="price-text fw-bold text-primary">
                                 <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="₫" maxFractionDigits="0"/>
                             </span>
                         </div>
 
-                        <%-- Action Buttons - Only show for logged-in users --%>
+                            <%-- Action Buttons - Only show for logged-in users --%>
                         <c:choose>
                             <c:when test="${not empty sessionScope.account}">
                                 <div class="d-flex gap-2">

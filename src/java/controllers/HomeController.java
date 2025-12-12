@@ -57,6 +57,9 @@ public class HomeController extends HttpServlet {
             case "delete_handler":
                 deleteHandler(request, response);//Xử lý form delete
                 break;
+            case "search":
+                search(request, response);
+                break;    
             default:
                 index(request, response);
                 break;
@@ -260,6 +263,33 @@ public class HomeController extends HttpServlet {
                 //Chuyển về trang index.jsp
                 response.sendRedirect(request.getContextPath() + "/home/index.do");
         }
+    }
+    
+    protected void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String keyword = request.getParameter("keyword");
+            ProductFacade productFacade = new ProductFacade();
+            List<Product> products;
+
+            // If keyword is empty or null, show all products
+            if (keyword == null || keyword.trim().isEmpty()) {
+                products = productFacade.readAll();
+            } else {
+                products = productFacade.getProductByName(keyword);
+                request.setAttribute("keyword", keyword); // Pass keyword back to view
+            }
+
+            request.setAttribute("products", products);
+
+            // Set message if no results found
+            if (products.isEmpty() && keyword != null && !keyword.trim().isEmpty()) {
+                request.setAttribute("message", "No albums found for \"" + keyword + "\"");
+            }
+        } catch (SQLException ex) {
+            request.setAttribute("message", ex.getMessage());
+            ex.printStackTrace();
+        }
+        request.getRequestDispatcher(Config.LAYOUT).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
