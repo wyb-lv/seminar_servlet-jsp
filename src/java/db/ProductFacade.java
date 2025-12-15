@@ -22,7 +22,6 @@ public class ProductFacade {
     public List<Product> readAll() throws SQLException {
         List<Product> list = new ArrayList<>();
         Connection con = DBContext.getConnection();
-        // PostgreSQL uses LIMIT and OFFSET
         PreparedStatement stm = con.prepareStatement(
             "SELECT * FROM product ORDER BY id");
         ResultSet rs = stm.executeQuery();
